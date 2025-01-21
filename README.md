@@ -39,3 +39,36 @@ Let me know if you'd like more technical details or a visual representation! ðŸ˜
 
 - docker compose up -d
 - docker compose down
+
+##### clean docker
+
+- docker ps
+- docker exec -it kafka-broker-1 bash
+
+
+#### java configuration - to create producer
+
+- mvn clean install   (full)
+- mvn compile  (fast)
+
+- mvn exec:java
+
+
+### pyspark processor configuration
+
+cd to/jobs/ where your spark_processor.py is
+
+step 1
+- docker build -t spark-processor-image .
+
+- rebuild docker when things changed - docker build -t spark-processor-image .
+
+
+step 2
+docker exec -it end_to_end_data_engineering_pipeline-spark-master-1 spark-submit \
+    --master spark://spark-master:7077 \
+    --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
+    //opt/bitnami/spark/jobs/spark_processor.py
+
+
+
